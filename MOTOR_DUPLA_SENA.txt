@@ -1,0 +1,383 @@
+# BLUEPRINT TÉCNICO OFICIAL - DUPLA SENA
+# MOTOR DE ANÁLISE MATEMÁTICA V2.0 PREMIUM
+# STATUS: REVISADO E PRONTO PARA INTEGRAÇÃO NO PROJETO MASTER
+
+OBJETIVO:
+Gerar listas de 6 a 15 números para Dupla Sena utilizando critérios estatísticos reais, aproveitando os dois sorteios por concurso, com análise cruzada inteligente e sem matemática ornamental.
+
+==================================================
+1. ENTRADA DE DADOS
+==================================================
+
+FONTE:
+- API oficial da Caixa
+- Base histórica local sincronizada
+
+ARMAZENAMENTO:
+- SQLite / Banco do sistema master
+
+JANELAS DISPONÍVEIS:
+- 10 concursos
+- 20 concursos
+- 30 concursos
+- 50 concursos
+- 100 concursos (premium)
+
+MODOS DE LEITURA DOS DADOS:
+
+MODO A — AMBOS (padrão)
+Concatena 1º e 2º sorteio
+
+MODO B — PRIMEIRO
+Usa apenas 1º sorteio
+
+MODO C — SEGUNDO
+Usa apenas 2º sorteio
+
+MODO D — CRUZADO
+Analisa relação entre 1º e 2º sorteio
+
+QUANTIDADE DE NÚMEROS:
+- mínimo: 6
+- máximo: 15
+
+==================================================
+2. ESTRUTURA MATEMÁTICA DO VOLANTE
+==================================================
+
+UNIVERSO:
+01 até 50
+
+GRUPOS ESPACIAIS:
+
+G1  = 01-05
+G2  = 06-10
+G3  = 11-15
+G4  = 16-20
+G5  = 21-25
+G6  = 26-30
+G7  = 31-35
+G8  = 36-40
+G9  = 41-45
+G10 = 46-50
+
+FAIXAS EQUILIBRADAS:
+
+F1 = 01-08
+F2 = 09-16
+F3 = 17-24
+F4 = 25-32
+F5 = 33-40
+F6 = 41-50
+
+BAIXO / ALTO:
+
+Baixo = 01-25
+Alto  = 26-50
+
+USO:
+Distribuição inteligente, nunca trava rígida.
+
+==================================================
+3. CRITÉRIOS OFICIAIS DO MOTOR
+==================================================
+
+Somente critérios com valor técnico:
+
+- Frequência Absoluta
+- Frequência Relativa
+- Z-Score
+- Delay / atraso
+- Coocorrência normal
+- Coocorrência cruzada
+- Repetição do último concurso
+- Soma proporcional
+- Par / Ímpar
+- Baixo / Alto
+- Cobertura por faixas
+- Cobertura por grupos
+- Consecutivos naturais
+- Diversidade entre listas
+- Anti-repetição histórica exata
+
+==================================================
+4. MÉTRICAS PRINCIPAIS
+==================================================
+
+4.1 FREQUÊNCIA ABSOLUTA
+Quantidade de vezes que cada dezena saiu.
+
+4.2 FREQUÊNCIA RELATIVA
+freq / concursos analisados
+
+4.3 Z-SCORE
+Comportamento acima ou abaixo da média.
+
+CORTE SUGERIDO:
+Z > -0.5
+
+4.4 DELAY / PRESSÃO
+Quantidade de concursos sem sair.
+
+4.5 COOCORRÊNCIA NORMAL
+Pares que saem juntos no mesmo sorteio.
+
+4.6 COOCORRÊNCIA CRUZADA
+
+Exclusivo da modalidade.
+
+Exemplo:
+Número aparece no 1º sorteio e repete padrões no 2º.
+
+Também avalia pares recorrentes entre os dois sorteios.
+
+4.7 REPETIÇÃO ÚLTIMO CONCURSO
+
+Faixa saudável:
+0 a 2 dezenas
+
+4.8 PAR / ÍMPAR
+
+Para jogo simples (6 dezenas):
+
+- 3 pares / 3 ímpares
+- 2 pares / 4 ímpares
+- 4 pares / 2 ímpares
+
+Para jogos maiores:
+proporcional automático.
+
+4.9 BAIXO / ALTO
+
+Distribuição próxima do equilíbrio.
+
+4.10 CONSECUTIVOS
+
+Aceitos naturalmente.
+
+4.11 ANTI-REPETIÇÃO
+
+Bloquear somente combinação histórica idêntica.
+
+==================================================
+5. SCORE MASTER DAS DEZENAS
+==================================================
+
+score =
+
+(zscore_valido * 1.2)
++
+(frequencia * 1.8)
++
+(delay * 1.4)
++
+(coocorrencia_normal * 1.4)
++
+(coocorrencia_cruzada * 1.6)
++
+(repeticao_ultimo * 1.0)
++
+(bonus_faixa * 1.2)
++
+(equilibrio_global * 1.2)
+
+OBSERVAÇÃO:
+Pesos ajustáveis via admin.
+
+==================================================
+6. SOMA INTELIGENTE PROPORCIONAL
+==================================================
+
+BASE:
+
+media_historica_dupla_sena_6 =
+média real histórica dos sorteios simples
+
+FORMULA:
+
+soma_alvo =
+(media_historica_dupla_sena_6 / 6)
+x quantidade_escolhida
+
+TOLERÂNCIA:
+
+± 15% operacional
+
+==================================================
+7. MODOS POR TIPO DE APOSTA
+==================================================
+
+7.1 JOGO SIMPLES
+
+6 números
+
+Foco:
+precisão estatística
+
+7.2 COBERTURA MÉDIA
+
+7 a 10 números
+
+Foco:
+alcance com qualidade
+
+7.3 COBERTURA AVANÇADA
+
+11 a 15 números
+
+Foco:
+máxima cobertura inteligente
+
+==================================================
+8. ALGORITMO DE GERAÇÃO
+==================================================
+
+ETAPA 1
+Carregar janela escolhida
+
+ETAPA 2
+Calcular:
+
+- frequência
+- Z-Score
+- delay
+- coocorrência normal
+- coocorrência cruzada
+- repetição último concurso
+
+ETAPA 3
+Filtrar dezenas elegíveis
+
+ETAPA 4
+Ordenar por score
+
+ETAPA 5
+Montar lista inicial
+
+ETAPA 6
+Validar:
+
+- soma proporcional
+- par/ímpar
+- baixo/alto
+- faixas
+- grupos
+- repetição último
+- diversidade
+
+ETAPA 7
+Verificar anti-repetição histórica
+
+ETAPA 8
+Gerar múltiplas listas
+
+==================================================
+9. REGRAS FINAIS
+==================================================
+
+QUANTIDADE:
+6 a 15
+
+PAR / ÍMPAR:
+automático proporcional
+
+BAIXO / ALTO:
+automático proporcional
+
+SOMA:
+calculada dinamicamente
+
+REPETIÇÃO ÚLTIMO:
+0 a 2 recomendável
+
+FAIXAS:
+4 a 6 preferencial
+
+GRUPOS:
+boa cobertura sem rigidez
+
+CONSECUTIVOS:
+permitidos
+
+ANTI-REPETIÇÃO:
+combinação idêntica proibida
+
+==================================================
+10. MODOS DO MOTOR
+==================================================
+
+MODO 1 — CONSERVADOR
+Maior equilíbrio histórico
+
+MODO 2 — PRESSÃO
+Maior peso delay
+
+MODO 3 — CONFLUÊNCIA
+Maior peso coocorrência normal
+
+MODO 4 — CRUZADO PREMIUM
+Maior peso coocorrência cruzada
+
+MODO 5 — TENDÊNCIA LEVE
+Peso moderado para janela curta
+
+MODO 6 — HÍBRIDO PREMIUM
+Mistura completa recomendada
+
+==================================================
+11. SAÍDA DO SISTEMA
+==================================================
+
+Para cada lista:
+
+- números gerados
+- score total
+- soma final
+- pares/ímpares
+- baixo/alto
+- repetidas do último concurso
+- faixas ocupadas
+- nota de qualidade 0-100
+
+==================================================
+12. BACKTEST HISTÓRICO
+==================================================
+
+Simular:
+
+- últimos 50 concursos
+- últimos 100 concursos
+- últimos 300 concursos
+
+Medir:
+
+- taxa de 4 acertos
+- taxa de 5 acertos
+- taxa de 6 acertos
+- comparação aleatória
+
+==================================================
+13. OBSERVAÇÕES TÉCNICAS
+==================================================
+
+- Não usar Fibonacci
+- Não usar primos
+- Não usar razão áurea
+- Não usar numerologia
+- Não prometer ganhos
+
+Diferencial da modalidade:
+
+uso dos dois sorteios por concurso
+com inteligência cruzada.
+
+==================================================
+14. STATUS FINAL
+==================================================
+
+Motor revisado
+Mais sólido que V1.0
+Pronto para integrar ao Web App Master
+Compatível com Mega / Lotofácil / Quina / Dia de Sorte
+
+FIM DO BLUEPRINT DUPLA SENA V2.0 PREMIUM

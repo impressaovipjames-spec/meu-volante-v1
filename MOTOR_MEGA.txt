@@ -1,0 +1,368 @@
+# BLUEPRINT TÉCNICO OFICIAL
+# MOTOR DE ANÁLISE MATEMÁTICA MEGA-SENA
+# VERSÃO 2.0 PREMIUM
+# STATUS: APROVADO PARA MVP PROFISSIONAL
+
+OBJETIVO:
+Gerar listas numéricas inteligentes, balanceadas e estatisticamente organizadas para Mega-Sena, utilizando histórico real, scoring matemático e filtros avançados.
+
+==================================================
+1. ENTRADA DE DADOS
+==================================================
+
+FONTE:
+API Oficial Caixa Econômica Federal
+
+ENDPOINT:
+https://servicebus2.caixa.gov.br/portaldeloterias/api/megasena
+
+DADOS COLETADOS:
+- Número do concurso
+- Data
+- 6 dezenas sorteadas
+- Ordem crescente
+- Acumulou / prêmio (futuro uso)
+
+JANELAS DE ANÁLISE:
+- 10 concursos = Turbo
+- 20 concursos = Atual
+- 30 concursos = Estratégico
+- 50 concursos = Macro
+
+Banco local:
+SQLite
+
+Armazenará:
+- Histórico completo
+- Listas geradas
+- Resultados de backtest
+- Preferências do usuário
+
+==================================================
+2. ESTATÍSTICAS BASE
+==================================================
+
+Para cada janela:
+
+2.1 Frequência Absoluta
+Quantidade de vezes que cada dezena apareceu.
+
+2.2 Frequência Relativa
+freq / total dezenas analisadas
+
+2.3 Média de Soma Histórica
+
+Soma média das dezenas por concurso.
+
+Referência:
+≈ 177 para jogos de 6 dezenas
+
+Faixa aceitável:
+150 até 205
+
+2.4 Par / Ímpar
+
+Padrões comuns:
+- 3P / 3I
+- 4P / 2I
+- 2P / 4I
+
+2.5 Baixo / Alto
+
+Baixo = 01 a 30
+Alto  = 31 a 60
+
+Padrões comuns:
+- 3 / 3
+- 4 / 2
+- 2 / 4
+
+2.6 Faixas do Volante
+
+Faixa 1 = 01-09
+Faixa 2 = 10-19
+Faixa 3 = 20-29
+Faixa 4 = 30-39
+Faixa 5 = 40-49
+Faixa 6 = 50-60
+
+Objetivo:
+Distribuir dezenas entre 4 a 6 faixas.
+
+==================================================
+3. NOVOS MÓDULOS PREMIUM
+==================================================
+
+3.1 DELAY SCORE (ATRASO)
+
+Calcula quantos concursos cada dezena está sem sair.
+
+Exemplo:
+22 ausente há 14 concursos
+
+Quanto maior atraso controlado,
+maior peso opcional.
+
+3.2 REPETIÇÃO DO ÚLTIMO CONCURSO
+
+Detecta dezenas do concurso anterior.
+
+Padrão comum:
+0 a 2 dezenas repetidas
+
+Motor poderá permitir:
+- nenhuma repetida
+- 1 repetida
+- até 2 repetidas
+
+3.3 CLUSTER VISUAL DA CARTELA
+
+Analisa distribuição visual no volante.
+
+Evitar:
+- concentração em canto
+- linhas cheias
+- blocos excessivos
+
+Buscar:
+- espalhamento visual equilibrado
+
+3.4 MODO VARIÁVEL INTELIGENTE
+
+Evita gerar sempre mesmas listas.
+
+Sistema:
+
+- Top dezenas elegíveis por score
+- pequenas rotações controladas
+- mantém qualidade estatística
+- gera diversidade natural
+
+3.5 BACKTEST HISTÓRICO
+
+Simula motor em concursos passados.
+
+Exemplo:
+
+Rodar últimos 300 concursos
+Simular como se estivesse no passado
+
+Medir:
+
+- média de acertos
+- taxa de 3 acertos
+- taxa de 4 acertos
+- taxa de 5 acertos
+- comparação com aleatório
+
+==================================================
+4. SCORE MASTER DAS DEZENAS
+==================================================
+
+Cada dezena recebe score:
+
+score =
+(freq * 2.0)
++
+(delay * 1.5)
++
+(faixa_subrepresentada * 1.0)
++
+(repeticao_ultimo_concurso * 0.8)
++
+(equilibrio_global * 1.2)
++
+(diversidade_interlistas * 1.3)
+
+Observação:
+Pesos ajustáveis via painel admin.
+
+==================================================
+5. MOTOR PRINCIPAL DE GERAÇÃO
+==================================================
+
+MODO 1 — MATEMÁTICO BALANCEADO
+
+Gera 4 listas padrão.
+
+Regras:
+
+- Quantidade configurável (6 a 20)
+- Par/Ímpar equilibrado
+- Baixo/Alto equilibrado
+- Soma próxima média histórica
+- 4 a 6 faixas ocupadas
+- Cluster visual saudável
+- Máximo 2 repetições entre listas
+
+--------------------------------------------------
+
+MODO 2 — CONFLUÊNCIA PURA
+
+Baseado somente no ranking de score.
+
+Sem filtros rígidos.
+
+Ideal para usuário intuitivo.
+
+--------------------------------------------------
+
+MODO 3 — HÍBRIDO PREMIUM
+
+Mistura:
+
+- score matemático
+- equilíbrio
+- delay
+- repetição
+- cluster visual
+
+Mais recomendado.
+
+--------------------------------------------------
+
+MODO 4 — VARIÁVEL INTELIGENTE
+
+Mesmo perfil estatístico,
+porém gera versões diferentes.
+
+Excelente para uso diário.
+
+==================================================
+6. REGRAS POR TAMANHO DO JOGO
+==================================================
+
+6 dezenas:
+padrão oficial Mega-Sena
+
+7 a 10 dezenas:
+listas premium compactas
+
+11 a 15 dezenas:
+cobertura ampliada
+
+16 a 20 dezenas:
+modo máximo cobertura
+
+Sistema recalcula proporcionalmente:
+
+- soma alvo
+- pares/ímpares
+- baixo/alto
+
+==================================================
+7. VALIDAÇÃO INTERNA DE CADA LISTA
+==================================================
+
+Após gerar, calcular:
+
+- score total
+- soma final
+- pares / ímpares
+- baixo / alto
+- faixas ocupadas
+- delay médio
+- repetidas último concurso
+- qualidade visual
+- nível de equilíbrio %
+
+Nota final:
+
+0 a 100
+
+==================================================
+8. BACKTEST PROFISSIONAL
+==================================================
+
+Tela interna:
+
+Últimos:
+- 50 concursos
+- 100 concursos
+- 300 concursos
+
+Mostrar:
+
+- média de acertos
+- melhor resultado
+- frequência de ternos
+- frequência de quadras simuladas
+- comparação aleatório simples
+
+==================================================
+9. SAÍDA DO APP
+==================================================
+
+Usuário recebe:
+
+- 4 listas inteligentes
+- ranking dezenas quentes
+- ranking dezenas atrasadas
+- análise da janela
+- nível de equilíbrio
+- modo usado
+- score das listas
+
+==================================================
+10. EXPERIÊNCIA PREMIUM
+==================================================
+
+Modos comerciais:
+
+GRÁTIS:
+- 1 lista por dia
+
+PRO:
+- ilimitado
+- backtest
+- variável inteligente
+- histórico salvo
+- modos secretos
+
+VIP:
+- alertas
+- tendências
+- relatórios automáticos
+
+==================================================
+11. OBSERVAÇÕES TÉCNICAS
+==================================================
+
+- Sistema NÃO promete prever sorteios.
+- Sistema organiza escolhas com lógica estatística.
+- Toda geração é reproduzível.
+- Pode usar seed para auditoria.
+- Estrutura pronta para IA futura.
+
+==================================================
+12. ROADMAP FUTURO
+==================================================
+
+V3.0:
+
+- Machine Learning leve
+- Tendência sazonal
+- Score adaptativo
+- Ranking pessoal do usuário
+- Sugestão baseada em acertos passados
+
+==================================================
+13. NOME COMERCIAL SUGERIDO
+==================================================
+
+MEGA ENGINE PRO
+ou
+MEGA SCORE IA
+ou
+MEGA MATRIX 60
+
+==================================================
+14. STATUS FINAL
+==================================================
+
+Blueprint sólido
+Monetizável
+Escalável
+Pronto para Sprints de Construção
+
+FIM DO BLUEPRINT V2.0

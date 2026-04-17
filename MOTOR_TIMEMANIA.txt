@@ -1,0 +1,387 @@
+# BLUEPRINT TÉCNICO OFICIAL - TIMEMANIA
+# MOTOR DE ANÁLISE MATEMÁTICA V2.0 PREMIUM
+# STATUS: REVISADO E PRONTO PARA INTEGRAÇÃO NO PROJETO MASTER
+
+OBJETIVO:
+Gerar listas de exatamente 10 números para Timemania utilizando critérios estatísticos reais, distribuição inteligente no universo 1 a 80 e tratamento independente do Time do Coração, sem matemática ornamental ou filtros artificiais.
+
+==================================================
+1. ENTRADA DE DADOS
+==================================================
+
+FONTE:
+- API oficial da Caixa
+- Base histórica local sincronizada
+
+ARMAZENAMENTO:
+- SQLite / Banco do sistema master
+
+JANELAS DISPONÍVEIS:
+- 10 concursos
+- 20 concursos
+- 30 concursos
+- 50 concursos
+- 100 concursos (premium)
+
+QUANTIDADE DE NÚMEROS:
+- fixa em 10
+
+TIME DO CORAÇÃO:
+- escolha manual ou sugestão automática
+
+==================================================
+2. ESTRUTURA MATEMÁTICA DO VOLANTE
+==================================================
+
+UNIVERSO:
+01 até 80
+
+FAIXAS PRINCIPAIS:
+
+F1 = 01-10
+F2 = 11-20
+F3 = 21-30
+F4 = 31-40
+F5 = 41-50
+F6 = 51-60
+F7 = 61-70
+F8 = 71-80
+
+GRUPOS SECUNDÁRIOS:
+
+G1  = 01-05
+G2  = 06-10
+G3  = 11-15
+G4  = 16-20
+G5  = 21-25
+G6  = 26-30
+G7  = 31-35
+G8  = 36-40
+G9  = 41-45
+G10 = 46-50
+G11 = 51-55
+G12 = 56-60
+G13 = 61-65
+G14 = 66-70
+G15 = 71-75
+G16 = 76-80
+
+BAIXO / ALTO:
+
+Baixo = 01-40
+Alto  = 41-80
+
+USO:
+Distribuição inteligente, nunca trava rígida.
+
+==================================================
+3. CRITÉRIOS OFICIAIS DO MOTOR
+==================================================
+
+Somente critérios com valor técnico:
+
+- Frequência Absoluta
+- Frequência Relativa
+- Z-Score
+- Delay / atraso
+- Coocorrência entre dezenas
+- Repetição do último concurso
+- Soma proporcional ao jogo fixo
+- Par / Ímpar
+- Baixo / Alto
+- Cobertura por faixas
+- Cobertura por grupos
+- Consecutivos naturais
+- Diversidade entre listas
+- Anti-repetição histórica exata
+
+==================================================
+4. MÉTRICAS PRINCIPAIS
+==================================================
+
+4.1 FREQUÊNCIA ABSOLUTA
+Quantidade de vezes que cada número saiu na janela.
+
+4.2 FREQUÊNCIA RELATIVA
+freq / concursos analisados
+
+4.3 Z-SCORE
+Mede comportamento acima ou abaixo da média.
+
+CORTE SUGERIDO:
+Z > -0.5
+
+4.4 DELAY / PRESSÃO
+Quantidade de concursos sem aparecer.
+
+4.5 COOCORRÊNCIA
+Força estatística entre pares.
+
+Exemplo:
+12 costuma sair com 47.
+
+4.6 REPETIÇÃO DO ÚLTIMO CONCURSO
+
+Faixa recomendada:
+0 a 3 números
+
+4.7 PAR / ÍMPAR
+
+Como o jogo do usuário é fixo em 10 números:
+
+- alvo preferencial 5 pares / 5 ímpares
+- aceitável 4/6 ou 6/4
+
+4.8 BAIXO / ALTO
+
+Meta saudável:
+5 baixos / 5 altos
+ou leve variação.
+
+4.9 CONSECUTIVOS
+
+Aceitos naturalmente.
+
+4.10 COBERTURA POR FAIXAS
+
+Ideal:
+ocupar 6 a 8 faixas
+
+Sem rigidez absoluta.
+
+4.11 ANTI-REPETIÇÃO
+
+Bloquear somente combinações históricas idênticas.
+
+==================================================
+5. SCORE INDIVIDUAL DAS DEZENAS
+==================================================
+
+score =
+
+(zscore_valido * 1.2)
++
+(frequencia * 1.8)
++
+(delay * 1.4)
++
+(coocorrencia * 1.4)
++
+(repeticao_ultimo * 1.0)
++
+(bonus_faixa * 1.2)
++
+(equilibrio_global * 1.2)
+
+OBSERVAÇÃO:
+Pesos ajustáveis via admin.
+
+==================================================
+6. SOMA INTELIGENTE DO JOGO
+==================================================
+
+Como a Timemania gera sempre 10 números,
+a soma pode ser tratada diretamente.
+
+BASE:
+
+media_historica_timemania_7 =
+média real histórica dos 7 números sorteados
+
+FORMULA:
+
+soma_alvo =
+(media_historica_timemania_7 / 7)
+x 10
+
+TOLERÂNCIA:
+
+± 15% operacional
+
+OBJETIVO:
+manter o jogo dentro de uma faixa estatística saudável.
+
+==================================================
+7. ALGORITMO DE GERAÇÃO
+==================================================
+
+ETAPA 1
+Carregar janela escolhida
+
+ETAPA 2
+Calcular:
+
+- frequência
+- Z-Score
+- delay
+- coocorrência
+- repetição do último
+- distribuição histórica
+
+ETAPA 3
+Filtrar dezenas elegíveis
+
+ETAPA 4
+Ordenar por score
+
+ETAPA 5
+Montar lista inicial com 10 números
+
+ETAPA 6
+Validar:
+
+- soma
+- par/ímpar
+- baixo/alto
+- faixas
+- grupos
+- repetição último concurso
+- diversidade
+
+ETAPA 7
+Verificar anti-repetição histórica
+
+ETAPA 8
+Gerar múltiplas listas
+
+==================================================
+8. REGRAS FINAIS
+==================================================
+
+QUANTIDADE:
+sempre 10
+
+PAR / ÍMPAR:
+preferência 5/5
+
+BAIXO / ALTO:
+preferência 5/5
+
+SOMA:
+calculada dinamicamente
+
+REPETIÇÃO ÚLTIMO:
+0 a 3 recomendável
+
+FAIXAS:
+6 a 8 preferencial
+
+GRUPOS:
+boa cobertura sem rigidez
+
+CONSECUTIVOS:
+permitidos
+
+ANTI-REPETIÇÃO:
+combinação idêntica proibida
+
+==================================================
+9. MODOS DO MOTOR
+==================================================
+
+MODO 1 — CONSERVADOR
+Maior equilíbrio histórico
+
+MODO 2 — PRESSÃO
+Maior peso delay
+
+MODO 3 — CONFLUÊNCIA
+Maior peso coocorrência
+
+MODO 4 — ESPACIAL FLEXÍVEL
+Melhor ocupação das faixas
+
+MODO 5 — TENDÊNCIA LEVE
+Peso moderado para janela curta
+
+MODO 6 — HÍBRIDO PREMIUM
+Mistura completa recomendada
+
+==================================================
+10. TIME DO CORAÇÃO (MÓDULO EXTRA)
+==================================================
+
+FUNCIONAMENTO INDEPENDENTE DO MOTOR NUMÉRICO
+
+MODOS:
+
+MODO 1 — MAIS FREQUENTE
+Time que mais saiu na janela
+
+MODO 2 — MAIS ATRASADO
+Time com maior delay
+
+MODO 3 — EQUILIBRADO
+Mistura frequência + atraso
+
+MODO 4 — MANUAL
+Usuário escolhe
+
+MODO 5 — ALEATÓRIO
+Fallback
+
+OBSERVAÇÃO:
+O Time do Coração não altera a matemática dos 10 números.
+É tratado como módulo separado.
+
+==================================================
+11. SAÍDA DO SISTEMA
+==================================================
+
+Para cada lista:
+
+- números gerados
+- score total
+- soma final
+- pares/ímpares
+- baixo/alto
+- repetidas do último concurso
+- faixas ocupadas
+- nota de qualidade 0-100
+- sugestão de Time do Coração
+
+==================================================
+12. BACKTEST HISTÓRICO
+==================================================
+
+Simular:
+
+- últimos 50 concursos
+- últimos 100 concursos
+- últimos 300 concursos
+
+Medir:
+
+- taxa de 3 acertos
+- taxa de 4 acertos
+- taxa de 5 acertos
+- taxa de 6 acertos
+- taxa de 7 acertos
+- acerto do Time do Coração
+- comparação aleatória
+
+==================================================
+13. OBSERVAÇÕES TÉCNICAS
+==================================================
+
+- Não usar Fibonacci
+- Não usar primos
+- Não usar razão áurea
+- Não usar numerologia
+- Não prometer ganhos
+
+O motor serve para organizar escolhas com lógica estatística.
+
+Como o jogador marca 10 números para um sorteio de 7,
+o foco é cobertura inteligente com equilíbrio.
+
+==================================================
+14. STATUS FINAL
+==================================================
+
+Motor revisado
+Mais sólido que V1.0
+Pronto para integrar ao Web App Master
+Compatível com Mega / Lotofácil / Quina / Dupla Sena / Dia de Sorte
+
+FIM DO BLUEPRINT TIMEMANIA V2.0 PREMIUM

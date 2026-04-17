@@ -1,0 +1,529 @@
+# BLUEPRINT MASTER OFICIAL
+# PROJETO: MEU VOLANTE
+# VERSÃO: 1.0 MVP EXECUÇÃO IMEDIATA
+# STATUS: AUTORIZADO PARA CONSTRUÇÃO
+
+##################################################
+1. IDENTIDADE DO PRODUTO
+##################################################
+
+NOME:
+MEU VOLANTE
+
+POSICIONAMENTO:
+Plataforma brasileira inteligente de loterias,
+palpites, jogos manuais, controle de bolões e resultados.
+
+MISSÃO:
+Unir inteligência estatística + liberdade do usuário.
+
+SLOGAN SUGERIDO:
+Meu Volante — Vai Que Dá.
+
+##################################################
+2. VISÃO GERAL DO MVP
+##################################################
+
+WEB APP responsivo (PC + Mobile)
+
+Funcionará como:
+
+- Gerador inteligente de jogos
+- Área manual do usuário
+- Controle de bolões
+- Histórico de resultados
+- Conferência automática
+- Alertas de prêmios acumulados
+- Central de modalidades Caixa
+
+##################################################
+3. MODALIDADES INICIAIS
+##################################################
+
+ATIVAS NO MVP:
+
+1. Mega-Sena
+2. Lotofácil
+3. Quina
+4. Dupla Sena
+5. Dia de Sorte
+
+EM EXPANSÃO:
+
+6. Timemania
+7. Lotomania
+8. Super Sete
+9. Federal (informativo)
+
+##################################################
+4. MOTORES MATEMÁTICOS
+##################################################
+
+Cada modalidade possui blueprint próprio
+armazenado em pasta separada.
+
+ESTRUTURA:
+
+/engines
+
+mega_sena.md
+lotofacil.md
+quina.md
+dupla_sena.md
+dia_de_sorte.md
+timemania.md (futuro)
+
+REGRA:
+
+Sempre consultar o blueprint específico
+antes de alterar lógica da modalidade.
+
+##################################################
+5. PILARES DO SISTEMA
+##################################################
+
+PILAR 1 — GERADOR INTELIGENTE
+
+- Matemático Balanceado
+- Híbrido Premium
+- Confluência Pura
+- Variável Inteligente
+- Modos específicos por modalidade
+
+PILAR 2 — MEU PALPITE
+
+Área humana/manual.
+
+Usuário abre volante oficial da modalidade,
+marca números livremente e salva ticket.
+
+PILAR 3 — GESTÃO
+
+- Bolões
+- Jogos salvos
+- Conferência
+- Histórico pessoal
+
+PILAR 4 — INFORMAÇÃO
+
+- Resultados
+- Prêmios acumulados
+- Próximos sorteios
+- Alertas
+
+##################################################
+6. FLUXO PRINCIPAL DO USUÁRIO
+##################################################
+
+1. Abre app
+2. Dashboard principal
+3. Escolhe modalidade
+4. Seleciona:
+
+- Gerar com Matemática
+- Minha Intuição
+- Meu Palpite
+
+5. Salva ticket
+6. Após sorteio confere automaticamente
+
+##################################################
+7. TELAS OFICIAIS MVP
+##################################################
+
+TELA 1 — LOGIN
+
+Simples:
+
+- Email
+- Senha
+- Entrar
+- Recuperar acesso
+
+Controle de plano:
+
+- Free
+- Premium
+- Admin
+
+--------------------------------------------
+
+TELA 2 — DASHBOARD HOME
+
+Cards por modalidade:
+
+- Nome
+- Concurso atual
+- Data sorteio
+- Valor prêmio
+- Status acumulou
+
+Cards clicáveis.
+
+--------------------------------------------
+
+TELA 3 — PÁGINA MODALIDADE
+
+Exemplo Mega-Sena:
+
+- Escolher janela
+- Escolher quantidade números
+- Escolher modo motor
+- Botão Gerar com Matemática
+- Botão Minha Intuição
+- Botão Meu Palpite
+
+Saída:
+
+- listas geradas
+- score
+- soma
+- estatísticas
+
+--------------------------------------------
+
+TELA 4 — MEU PALPITE
+
+Volante visual oficial.
+
+Usuário marca manualmente.
+
+Botões:
+
+- Salvar Ticket
+- Limpar
+- Enviar para Meus Jogos
+
+Extras:
+
+Dia de Sorte:
+- escolher mês
+
+Timemania:
+- escolher time
+
+--------------------------------------------
+
+TELA 5 — MEUS JOGOS
+
+Separação visual:
+
+🎯 Sistema
+👤 Usuário
+
+Exibir:
+
+- modalidade
+- números
+- data
+- concurso alvo
+- status
+
+--------------------------------------------
+
+TELA 6 — BOLÃO
+
+Cadastro simples:
+
+- modalidade
+- concurso
+- valor total
+- valor cota
+- cotas vendidas
+- cotas pagas
+
+Resultado:
+
+- arrecadado
+- gasto
+- lucro/prejuízo
+
+--------------------------------------------
+
+TELA 7 — HISTÓRICO
+
+- últimos concursos
+- números sorteados
+- ranking quentes
+- ranking atrasados
+
+--------------------------------------------
+
+TELA 8 — ALERTAS
+
+Usuário define:
+
+- Mega acima de X valor
+- Lotofácil especial
+- Novo resultado disponível
+
+##################################################
+8. MODOS DE USO
+##################################################
+
+MODO 1 — GERAR COM MATEMÁTICA
+
+Usa blueprint oficial da modalidade.
+
+MODO 2 — MINHA INTUIÇÃO
+
+Geração leve:
+
+- frequência
+- atraso
+- rapidez
+
+Sem filtros pesados.
+
+MODO 3 — MEU PALPITE
+
+100% manual pelo usuário.
+
+##################################################
+9. BANCO DE DADOS
+##################################################
+
+TABELAS:
+
+usuarios
+id
+email
+senha_hash
+plano
+status
+expira_em
+
+sorteios
+id
+modalidade
+concurso
+data
+dezenas
+extras_json
+
+listas_geradas
+id
+usuario_id
+modalidade
+modo
+numeros
+score
+data
+
+tickets_usuario
+id
+usuario_id
+modalidade
+numeros
+extra
+nome_ticket
+data
+
+boloes
+id
+usuario_id
+modalidade
+concurso
+valor_total
+valor_cota
+vendidas
+pagas
+saldo
+
+alertas
+id
+usuario_id
+modalidade
+valor_minimo
+
+##################################################
+10. STACK TECNOLÓGICA MVP
+##################################################
+
+FRONT:
+React responsivo
+
+BACK:
+Python FastAPI
+
+BANCO:
+Supabase Free / PostgreSQL
+
+DEPLOY:
+Vercel / Render / Railway
+
+API EXTERNA:
+Somente Caixa
+
+##################################################
+11. REGRAS VISUAIS
+##################################################
+
+Tema brasileiro, limpo e forte.
+
+Cada modalidade usa cor própria:
+
+Mega-Sena = verde
+Lotofácil = roxo
+Quina = azul
+Dupla Sena = vinho
+Dia de Sorte = dourado
+
+Layout mobile first.
+
+##################################################
+12. MONETIZAÇÃO INICIAL
+##################################################
+
+PLANO FREE
+
+- uso limitado
+- poucos jogos por dia
+
+PLANO PREMIUM
+
+- ilimitado
+- backtest
+- bolão completo
+- alertas
+- histórico avançado
+
+Pagamento externo/manual no MVP.
+
+##################################################
+13. REGRAS IMPORTANTES
+##################################################
+
+- Nunca prometer ganhos
+- Nunca usar linguagem enganosa
+- Não usar numerologia
+- Não usar fake IA
+
+O sistema organiza escolhas com lógica estatística.
+
+##################################################
+14. ROADMAP EXECUÇÃO HOJE
+##################################################
+
+SPRINT 01
+Estrutura projeto + login + dashboard
+
+SPRINT 02
+Mega + Lotofácil ativos
+
+SPRINT 03
+Quina + Dupla Sena + Dia de Sorte
+
+SPRINT 04
+Meu Palpite + Jogos salvos
+
+SPRINT 05
+Bolão + Histórico + Alertas
+
+SPRINT 06
+Deploy público teste
+
+##################################################
+15. ORIENTAÇÃO PARA ANTIGRAVITY
+##################################################
+
+Executar módulos por prioridade.
+
+Sempre manter código limpo e escalável.
+
+Consultar blueprints dos motores
+na pasta /engines quando necessário.
+
+##################################################
+16. STATUS FINAL
+##################################################
+
+PROJETO OFICIALIZADO
+
+MEU VOLANTE MVP
+
+PRONTO PARA EXECUÇÃO IMEDIATA 
+
+##################################################
+ADENDO OFICIAL — LOCALIZAÇÃO DOS ARQUIVOS DOS MOTORES
+##################################################
+
+Este projeto utiliza blueprints externos por modalidade.
+
+Antes de implementar qualquer lógica matemática,
+o executor deverá consultar os arquivos oficiais
+armazenados na pasta raiz do projeto.
+
+==================================================
+CAMINHO RAIZ ATUAL DO PROJETO
+==================================================
+
+E:\VIPNEXUSIA\PARA INICIAR\MEU VOLANTE
+
+==================================================
+ARQUIVOS OFICIAIS DISPONÍVEIS
+==================================================
+
+BLUPRINT MASTER.txt
+MOTOR_MEGA.txt
+MOTOR_LOTOFACIL.txt
+MOTOR_QUINA.txt
+MOTOR_DUPLA_SENA.txt
+MOTOR_DIA_DA_SORTE.txt
+MOTOR_TIMEMANIA.txt
+
+==================================================
+MAPEAMENTO OBRIGATÓRIO
+==================================================
+
+Mega-Sena
+→ MOTOR_MEGA.txt
+
+Lotofácil
+→ MOTOR_LOTOFACIL.txt
+
+Quina
+→ MOTOR_QUINA.txt
+
+Dupla Sena
+→ MOTOR_DUPLA_SENA.txt
+
+Dia de Sorte
+→ MOTOR_DIA_DA_SORTE.txt
+
+Timemania
+→ MOTOR_TIMEMANIA.txt
+
+==================================================
+PROTOCOLO DE EXECUÇÃO
+==================================================
+
+Para cada modalidade:
+
+1. Ler o arquivo oficial correspondente
+2. Aplicar as regras descritas no blueprint
+3. Implementar o motor fielmente
+4. Não improvisar regras externas
+5. Em caso de dúvida, priorizar o arquivo oficial
+
+==================================================
+REGRA DE AUTORIDADE
+==================================================
+
+Se houver conflito entre código e blueprint:
+
+O blueprint oficial prevalece.
+
+==================================================
+OBSERVAÇÃO
+==================================================
+
+Os nomes atuais dos arquivos permanecem válidos.
+Mudança futura de nomenclatura é opcional
+e não bloqueia a execução do projeto.
+
+##################################################
+FIM DO ADENDO OFICIAL
+##################################################
+
+FIM

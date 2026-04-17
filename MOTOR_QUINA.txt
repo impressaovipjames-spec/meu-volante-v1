@@ -1,0 +1,363 @@
+# BLUEPRINT TÉCNICO OFICIAL - QUINA
+# MOTOR DE ANÁLISE MATEMÁTICA V2.0 PREMIUM
+# STATUS: REVISADO E PRONTO PARA INTEGRAÇÃO NO PROJETO MASTER
+
+OBJETIVO:
+Gerar listas de 5 a 15 números para Quina utilizando critérios estatísticos reais, distribuição inteligente, cobertura progressiva e padrões históricos, sem matemática ornamental ou filtros artificiais.
+
+==================================================
+1. ENTRADA DE DADOS
+==================================================
+
+FONTE:
+- API oficial da Caixa
+- Base histórica local sincronizada
+
+ARMAZENAMENTO:
+- SQLite / Banco do sistema master
+
+JANELAS DISPONÍVEIS:
+- 10 concursos
+- 20 concursos
+- 30 concursos
+- 50 concursos
+- 100 concursos (premium)
+
+QUANTIDADE DE NÚMEROS:
+- Definida pelo usuário
+- mínimo: 5
+- máximo: 15
+
+==================================================
+2. ESTRUTURA MATEMÁTICA DA QUINA
+==================================================
+
+UNIVERSO:
+01 até 80
+
+AGRUPAMENTO ESPACIAL:
+
+16 grupos de 5 dezenas:
+
+G1  = 01-05
+G2  = 06-10
+G3  = 11-15
+G4  = 16-20
+G5  = 21-25
+G6  = 26-30
+G7  = 31-35
+G8  = 36-40
+G9  = 41-45
+G10 = 46-50
+G11 = 51-55
+G12 = 56-60
+G13 = 61-65
+G14 = 66-70
+G15 = 71-75
+G16 = 76-80
+
+USO:
+Distribuição inteligente, nunca trava rígida.
+
+==================================================
+3. CRITÉRIOS OFICIAIS DO MOTOR
+==================================================
+
+Somente critérios com valor técnico:
+
+- Frequência Absoluta
+- Frequência Relativa
+- Z-Score
+- Delay / atraso
+- Coocorrência entre dezenas
+- Repetição do último concurso
+- Soma proporcional
+- Par / Ímpar
+- Cobertura por grupos
+- Consecutivos naturais
+- Diversidade entre listas
+- Anti-repetição histórica exata
+
+==================================================
+4. MÉTRICAS PRINCIPAIS
+==================================================
+
+4.1 FREQUÊNCIA ABSOLUTA
+Quantidade de vezes que cada dezena saiu na janela.
+
+4.2 FREQUÊNCIA RELATIVA
+freq / concursos analisados
+
+4.3 Z-SCORE
+Mede comportamento acima ou abaixo da média.
+
+CORTE SUGERIDO:
+Z > -0.5
+
+4.4 DELAY / PRESSÃO
+Quantidade de concursos sem aparecer.
+
+Maior atraso pode elevar score,
+sem caráter preditivo.
+
+4.5 COOCORRÊNCIA
+Força estatística entre pares.
+
+Exemplo:
+12 costuma sair com 47.
+
+4.6 REPETIÇÃO DO ÚLTIMO CONCURSO
+
+Na Quina geralmente ocorre:
+
+- 0 repetidas
+- 1 repetida
+- ocasionalmente 2
+
+Peso leve.
+
+4.7 PAR / ÍMPAR
+
+Para jogo simples (5 dezenas):
+
+- 2 pares / 3 ímpares
+- 3 pares / 2 ímpares
+
+Para jogos maiores:
+proporcional automático.
+
+4.8 CONSECUTIVOS
+
+Aceitos naturalmente.
+
+Exemplo:
+11-12 ou 44-45
+
+Sem penalização forte.
+
+4.9 COBERTURA POR GRUPOS
+
+Buscar espalhamento saudável entre grupos.
+
+Não obrigatório.
+
+4.10 ANTI-REPETIÇÃO
+
+Bloquear somente combinações históricas idênticas.
+
+==================================================
+5. SCORE INDIVIDUAL DAS DEZENAS
+==================================================
+
+score =
+
+(zscore_valido * 1.2)
++
+(frequencia * 1.5)
++
+(delay * 1.4)
++
+(coocorrencia * 1.5)
++
+(repeticao_ultimo * 1.0)
++
+(bonus_grupo * 1.0)
+
+OBSERVAÇÃO:
+Pesos ajustáveis via admin.
+
+==================================================
+6. SOMA INTELIGENTE PROPORCIONAL
+==================================================
+
+A soma da lista varia conforme quantidade escolhida.
+
+BASE:
+
+media_historica_quina_5 = média real histórica de jogos simples
+
+FORMULA:
+
+soma_alvo =
+(media_historica_quina_5 / 5)
+x quantidade_escolhida
+
+TOLERÂNCIA:
+
+± 15% operacional
+
+Isso corrige distorção para jogos com 6 a 15 dezenas.
+
+==================================================
+7. MODOS POR TIPO DE APOSTA
+==================================================
+
+7.1 JOGO SIMPLES
+
+5 dezenas
+
+Foco:
+precisão estatística
+
+7.2 COBERTURA MÉDIA
+
+6 a 10 dezenas
+
+Foco:
+ampliar alcance mantendo score alto
+
+7.3 COBERTURA AVANÇADA
+
+11 a 15 dezenas
+
+Foco:
+máxima cobertura inteligente
+
+==================================================
+8. ALGORITMO DE GERAÇÃO
+==================================================
+
+ETAPA 1
+Carregar janela escolhida
+
+ETAPA 2
+Calcular:
+
+- frequência
+- Z-Score
+- delay
+- coocorrência
+- repetição do último
+- distribuição histórica
+
+ETAPA 3
+Filtrar dezenas elegíveis
+
+ETAPA 4
+Ordenar por score
+
+ETAPA 5
+Montar lista inicial
+
+ETAPA 6
+Validar:
+
+- soma proporcional
+- par/ímpar
+- grupos
+- repetição último concurso
+- diversidade
+
+ETAPA 7
+Verificar anti-repetição histórica
+
+ETAPA 8
+Gerar múltiplas listas
+
+==================================================
+9. REGRAS FINAIS
+==================================================
+
+QUANTIDADE:
+5 a 15
+
+PAR / ÍMPAR:
+automático proporcional
+
+SOMA:
+calculada dinamicamente
+
+REPETIÇÃO ÚLTIMO:
+0 a 2 preferencial
+
+GRUPOS:
+boa cobertura sem rigidez
+
+CONSECUTIVOS:
+permitidos
+
+ANTI-REPETIÇÃO:
+combinação idêntica proibida
+
+==================================================
+10. MODOS DO MOTOR
+==================================================
+
+MODO 1 — CONSERVADOR
+Maior equilíbrio histórico
+
+MODO 2 — PRESSÃO
+Maior peso delay
+
+MODO 3 — CONFLUÊNCIA
+Maior peso coocorrência
+
+MODO 4 — TENDÊNCIA LEVE
+Peso moderado para janela curta
+
+MODO 5 — ESPACIAL FLEXÍVEL
+Melhor espalhamento entre grupos
+
+MODO 6 — HÍBRIDO PREMIUM
+Mistura completa recomendada
+
+==================================================
+11. SAÍDA DO SISTEMA
+==================================================
+
+Para cada lista:
+
+- números gerados
+- score total
+- soma final
+- pares/ímpares
+- repetidas do último concurso
+- grupos ocupados
+- nota de qualidade 0-100
+
+==================================================
+12. BACKTEST HISTÓRICO
+==================================================
+
+Simular:
+
+- últimos 50 concursos
+- últimos 100 concursos
+- últimos 300 concursos
+
+Medir:
+
+- taxa de Duque
+- taxa de Terno
+- taxa de Quadra
+- taxa de Quina
+- comparação aleatória
+
+==================================================
+13. OBSERVAÇÕES TÉCNICAS
+==================================================
+
+- Não usar Fibonacci
+- Não usar primos
+- Não usar razão áurea
+- Não usar numerologia
+- Não prometer ganhos
+
+O motor serve para organizar escolhas com lógica estatística.
+
+==================================================
+14. STATUS FINAL
+==================================================
+
+Motor revisado
+Mais sólido que V1.0
+Pronto para integrar ao Web App Master
+Compatível com Mega / Lotofácil / Dupla Sena
+
+FIM DO BLUEPRINT QUINA V2.0 PREMIUM
+
+
+
+
+
+

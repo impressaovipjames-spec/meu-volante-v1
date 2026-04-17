@@ -1,0 +1,406 @@
+# BLUEPRINT TÉCNICO OFICIAL - DIA DE SORTE
+# MOTOR DE ANÁLISE MATEMÁTICA V2.0 PREMIUM
+# STATUS: REVISADO E PRONTO PARA INTEGRAÇÃO NO PROJETO MASTER
+
+OBJETIVO:
+Gerar listas de 7 a 15 números para Dia de Sorte utilizando critérios estatísticos reais, distribuição inteligente no universo reduzido (1 a 31) e tratamento independente do Mês de Sorte, sem matemática ornamental ou filtros artificiais.
+
+==================================================
+1. ENTRADA DE DADOS
+==================================================
+
+FONTE:
+- API oficial da Caixa
+- Base histórica local sincronizada
+
+ARMAZENAMENTO:
+- SQLite / Banco do sistema master
+
+JANELAS DISPONÍVEIS:
+- 10 concursos
+- 20 concursos
+- 30 concursos
+- 50 concursos
+- 100 concursos (premium)
+
+QUANTIDADE DE NÚMEROS:
+- Definida pelo usuário
+- mínimo: 7
+- máximo: 15
+
+MÊS DE SORTE:
+- Janeiro a Dezembro
+- escolha manual ou sugestão automática
+
+==================================================
+2. ESTRUTURA MATEMÁTICA DO VOLANTE
+==================================================
+
+UNIVERSO:
+01 até 31
+
+AGRUPAMENTO PRINCIPAL:
+
+G1 = 01-05
+G2 = 06-10
+G3 = 11-15
+G4 = 16-20
+G5 = 21-25
+G6 = 26-30
+G7 = 31
+
+FAIXAS:
+
+F1 = 01-10
+F2 = 11-20
+F3 = 21-30
+F4 = 31
+
+BAIXO / ALTO:
+
+Baixo = 01-15
+Alto  = 16-31
+
+USO:
+Distribuição inteligente, nunca trava rígida.
+
+==================================================
+3. CRITÉRIOS OFICIAIS DO MOTOR
+==================================================
+
+Somente critérios com valor técnico:
+
+- Frequência Absoluta
+- Frequência Relativa
+- Z-Score
+- Delay / atraso
+- Coocorrência entre dezenas
+- Repetição do último concurso
+- Soma proporcional
+- Par / Ímpar
+- Baixo / Alto
+- Cobertura por faixas
+- Cobertura por grupos
+- Consecutivos naturais
+- Diversidade entre listas
+- Anti-repetição histórica exata
+
+==================================================
+4. MÉTRICAS PRINCIPAIS
+==================================================
+
+4.1 FREQUÊNCIA ABSOLUTA
+Quantidade de vezes que cada número saiu na janela.
+
+4.2 FREQUÊNCIA RELATIVA
+freq / concursos analisados
+
+4.3 Z-SCORE
+Mede comportamento acima ou abaixo da média.
+
+CORTE SUGERIDO:
+Z > -0.5
+
+4.4 DELAY / PRESSÃO
+Quantidade de concursos sem aparecer.
+
+Maior atraso pode elevar score,
+sem caráter preditivo.
+
+4.5 COOCORRÊNCIA
+Força estatística entre pares.
+
+Exemplo:
+07 costuma sair com 19.
+
+Como o universo é pequeno,
+esse fator ganha maior relevância.
+
+4.6 REPETIÇÃO DO ÚLTIMO CONCURSO
+
+Normalmente ocorre repetição parcial.
+
+Faixa recomendada:
+0 a 3 números
+
+4.7 PAR / ÍMPAR
+
+Para jogo simples (7 números):
+
+- 3 pares / 4 ímpares
+ou
+- 4 pares / 3 ímpares
+
+Para jogos maiores:
+proporcional automático.
+
+4.8 BAIXO / ALTO
+
+Meta saudável:
+distribuição próxima do equilíbrio.
+
+4.9 CONSECUTIVOS
+
+Aceitos naturalmente.
+
+Universo pequeno favorece blocos e sequências.
+
+4.10 COBERTURA POR FAIXAS
+
+Ideal:
+ocupar 3 ou 4 faixas
+
+Sem rigidez absoluta.
+
+4.11 ANTI-REPETIÇÃO
+
+Bloquear somente combinações históricas idênticas.
+
+==================================================
+5. SCORE INDIVIDUAL DAS DEZENAS
+==================================================
+
+score =
+
+(zscore_valido * 1.2)
++
+(frequencia * 1.8)
++
+(delay * 1.4)
++
+(coocorrencia * 1.6)
++
+(repeticao_ultimo * 1.0)
++
+(bonus_faixa * 1.3)
++
+(equilibrio_global * 1.2)
+
+OBSERVAÇÃO:
+Pesos ajustáveis via admin.
+
+==================================================
+6. SOMA INTELIGENTE PROPORCIONAL
+==================================================
+
+BASE:
+
+media_historica_dia_sorte_7 = média real histórica dos sorteios simples
+
+FORMULA:
+
+soma_alvo =
+(media_historica_dia_sorte_7 / 7)
+x quantidade_escolhida
+
+TOLERÂNCIA:
+
+± 15% operacional
+
+==================================================
+7. MODOS POR TIPO DE APOSTA
+==================================================
+
+7.1 JOGO SIMPLES
+
+7 números
+
+Foco:
+precisão estatística
+
+7.2 COBERTURA MÉDIA
+
+8 a 11 números
+
+Foco:
+ampliar alcance mantendo qualidade
+
+7.3 COBERTURA AVANÇADA
+
+12 a 15 números
+
+Foco:
+máxima cobertura inteligente
+
+==================================================
+8. ALGORITMO DE GERAÇÃO
+==================================================
+
+ETAPA 1
+Carregar janela escolhida
+
+ETAPA 2
+Calcular:
+
+- frequência
+- Z-Score
+- delay
+- coocorrência
+- repetição do último
+- distribuição histórica
+
+ETAPA 3
+Filtrar dezenas elegíveis
+
+ETAPA 4
+Ordenar por score
+
+ETAPA 5
+Montar lista inicial
+
+ETAPA 6
+Validar:
+
+- soma proporcional
+- par/ímpar
+- baixo/alto
+- faixas
+- grupos
+- repetição último concurso
+- diversidade
+
+ETAPA 7
+Verificar anti-repetição histórica
+
+ETAPA 8
+Gerar múltiplas listas
+
+==================================================
+9. REGRAS FINAIS
+==================================================
+
+QUANTIDADE:
+7 a 15
+
+PAR / ÍMPAR:
+automático proporcional
+
+BAIXO / ALTO:
+automático proporcional
+
+SOMA:
+calculada dinamicamente
+
+REPETIÇÃO ÚLTIMO:
+0 a 3 recomendável
+
+FAIXAS:
+3 a 4 preferencial
+
+GRUPOS:
+boa cobertura sem rigidez
+
+CONSECUTIVOS:
+permitidos
+
+ANTI-REPETIÇÃO:
+combinação idêntica proibida
+
+==================================================
+10. MÊS DE SORTE (MÓDULO EXTRA)
+==================================================
+
+FUNCIONAMENTO INDEPENDENTE DO MOTOR NUMÉRICO
+
+MODOS:
+
+MODO 1 — MAIS FREQUENTE
+Mês que mais saiu na janela
+
+MODO 2 — MAIS ATRASADO
+Maior delay entre meses
+
+MODO 3 — EQUILIBRADO
+Mistura frequência + atraso
+
+MODO 4 — MANUAL
+Usuário escolhe
+
+MODO 5 — ALEATÓRIO
+Fallback
+
+OBSERVAÇÃO:
+Chance real permanece 1 em 12.
+
+==================================================
+11. MODOS DO MOTOR
+==================================================
+
+MODO 1 — CONSERVADOR
+Maior equilíbrio histórico
+
+MODO 2 — PRESSÃO
+Maior peso delay
+
+MODO 3 — CONFLUÊNCIA
+Maior peso coocorrência
+
+MODO 4 — ESPACIAL FLEXÍVEL
+Melhor ocupação das faixas
+
+MODO 5 — TENDÊNCIA LEVE
+Peso moderado para janela curta
+
+MODO 6 — HÍBRIDO PREMIUM
+Mistura completa recomendada
+
+==================================================
+12. SAÍDA DO SISTEMA
+==================================================
+
+Para cada lista:
+
+- números gerados
+- score total
+- soma final
+- pares/ímpares
+- baixo/alto
+- repetidas do último concurso
+- faixas ocupadas
+- nota de qualidade 0-100
+- sugestão de Mês de Sorte
+
+==================================================
+13. BACKTEST HISTÓRICO
+==================================================
+
+Simular:
+
+- últimos 50 concursos
+- últimos 100 concursos
+- últimos 300 concursos
+
+Medir:
+
+- taxa de 4 acertos
+- taxa de 5 acertos
+- taxa de 6 acertos
+- taxa de 7 acertos
+- acerto do Mês de Sorte
+- comparação aleatória
+
+==================================================
+14. OBSERVAÇÕES TÉCNICAS
+==================================================
+
+- Não usar Fibonacci
+- Não usar primos
+- Não usar razão áurea
+- Não usar numerologia
+- Não prometer ganhos
+
+O motor serve para organizar escolhas com lógica estatística.
+
+Como o universo é pequeno,
+coocorrência e equilíbrio têm maior peso.
+
+==================================================
+15. STATUS FINAL
+==================================================
+
+Motor revisado
+Mais sólido que V1.0
+Pronto para integrar ao Web App Master
+Compatível com Mega / Lotofácil / Quina / Dupla Sena / Timemania
+
+FIM DO BLUEPRINT DIA DE SORTE V2.0 PREMIUM

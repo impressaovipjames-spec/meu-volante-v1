@@ -1,0 +1,393 @@
+# BLUEPRINT TÉCNICO OFICIAL - LOTOFÁCIL
+# MOTOR DE ANÁLISE MATEMÁTICA V3.0
+# STATUS: REVISADO PARA MVP PROFISSIONAL
+
+OBJETIVO:
+Gerar listas de 15 a 20 números para Lotofácil com base em critérios estatísticos reais, cobertura espacial flexível e aderência a padrões históricos, sem travas artificiais que eliminem comportamentos comuns do jogo.
+
+==================================================
+1. ENTRADA DE DADOS
+==================================================
+
+FONTE:
+- API oficial da Caixa
+- Base histórica completa local
+
+JANELAS DE ANÁLISE:
+- 10 concursos
+- 20 concursos
+- 30 concursos
+- 50 concursos
+- 100 concursos
+
+ARMAZENAMENTO:
+- SQLite para cache dos sorteios
+- histórico completo
+- listas geradas
+- resultados de backtest
+
+==================================================
+2. ESTRUTURA DO VOLANTE 5x5
+==================================================
+
+MAPA PADRÃO:
+
+01 02 03 04 05
+06 07 08 09 10
+11 12 13 14 15
+16 17 18 19 20
+21 22 23 24 25
+
+GRUPOS:
+- G1 = 01-05
+- G2 = 06-10
+- G3 = 11-15
+- G4 = 16-20
+- G5 = 21-25
+
+LINHAS:
+- L1 = 01-05
+- L2 = 06-10
+- L3 = 11-15
+- L4 = 16-20
+- L5 = 21-25
+
+COLUNAS:
+- C1 = 01,06,11,16,21
+- C2 = 02,07,12,17,22
+- C3 = 03,08,13,18,23
+- C4 = 04,09,14,19,24
+- C5 = 05,10,15,20,25
+
+TERMINAÇÕES:
+- finais de 0 a 9, conforme último dígito
+
+==================================================
+3. PRINCÍPIOS DO MOTOR
+==================================================
+
+O motor utilizará apenas critérios com materialidade estatística e estrutural:
+
+- Frequência absoluta
+- Frequência relativa
+- Z-Score
+- Delay / atraso
+- Repetição do último concurso
+- Coocorrência entre dezenas
+- Distribuição por grupos
+- Distribuição por linhas e colunas
+- Par / ímpar
+- Consecutivos
+- Terminações
+- Soma da lista
+- Anti-repetição histórica exata
+
+OBSERVAÇÃO:
+Cobertura espacial será tratada como preferência inteligente, não como trava rígida.
+Isso evita eliminar padrões reais da Lotofácil, como sequências longas e concentrações parciais historicamente comuns.
+
+==================================================
+4. CRITÉRIOS ESTATÍSTICOS DO MOTOR
+==================================================
+
+4.1 FREQUÊNCIA ABSOLUTA
+Conta quantas vezes cada número apareceu na janela escolhida.
+
+4.2 FREQUÊNCIA RELATIVA
+freq / total de concursos da janela
+
+4.3 Z-SCORE
+Usado para medir desvio em relação ao comportamento médio da janela.
+
+REGRA:
+- aceitar dezenas com Z-Score acima do limite configurado
+- corte inicial sugerido: Z > -0.5
+
+4.4 DELAY / PRESSÃO ESTATÍSTICA
+Conta há quantos concursos a dezena não aparece.
+
+OBJETIVO:
+valorizar dezenas com atraso relevante, sem transformar atraso em previsão.
+
+4.5 REPETIÇÃO DO ÚLTIMO CONCURSO
+A Lotofácil repete muitos números do concurso anterior.
+
+MOTOR DEVE CALCULAR:
+- quantas dezenas da lista atual vieram do último resultado
+- faixa sugerida de repetição: 7 a 11 dezenas
+
+Essa faixa deve ser flexível, não absoluta.
+
+4.6 COOCORRÊNCIA
+Matriz 25x25 com força de aparecimento conjunto entre dezenas.
+
+EXEMPLO:
+- se 07 e 13 costumam sair juntas, essa relação aumenta a prioridade da dupla
+
+4.7 DISTRIBUIÇÃO POR GRUPOS
+Preferência por boa presença entre G1-G5, sem exigir rigidez artificial.
+
+REFERÊNCIA:
+- evitar listas excessivamente concentradas em 1 ou 2 grupos
+- buscar cobertura equilibrada sempre que possível
+
+4.8 PAR / ÍMPAR
+Faixa recomendada:
+- 6 a 9 pares
+- restante ímpares
+
+4.9 CONSECUTIVOS
+A Lotofácil aceita bem sequências.
+
+FAIXA RECOMENDADA:
+- 3 a 8 números consecutivos totais
+- sem proibir sequências longas quando forem coerentes com o restante da lista
+
+4.10 LINHAS E COLUNAS
+Não usar como trava rígida.
+
+USO CORRETO:
+- premiar listas com boa cobertura espacial
+- aceitar exceções históricas reais
+- não bloquear lista apenas por concentração parcial em algumas linhas ou colunas
+
+4.11 TERMINAÇÕES
+Preferência por distribuição saudável.
+
+REGRA SUGERIDA:
+- evitar excesso extremo de mesma terminação
+- teto recomendado: até 3 números com a mesma terminação, salvo exceções de score
+
+4.12 SOMA DA LISTA
+Faixa operacional:
+- mínimo sugerido: 170
+- máximo sugerido: 220
+
+FAIXA IDEAL:
+- 185 a 205
+
+4.13 ANTI-REPETIÇÃO HISTÓRICA
+Bloquear apenas combinações idênticas já sorteadas.
+
+NÃO BLOQUEAR:
+- subconjuntos parecidos
+- padrões semelhantes
+- listas com mesma “cara” visual
+
+==================================================
+5. SCORE INDIVIDUAL DAS DEZENAS
+==================================================
+
+Cada dezena recebe score composto por:
+
+score =
+  (zscore_valido * 1.2) +
+  (frequencia * 1.5) +
+  (delay * 1.3) +
+  (coocorrencia_media * 1.6) +
+  (repeticao_ultimo_concurso * 1.8) +
+  (bonus_espacial * 1.2)
+
+OBSERVAÇÕES:
+- pesos ajustáveis
+- score não decide sozinho
+- lista final ainda passa por validação combinatória
+
+==================================================
+6. SCORE GLOBAL DA LISTA
+==================================================
+
+Após montagem, cada lista recebe score global com base em:
+
+- soma final
+- aderência estatística
+- repetição do último concurso
+- qualidade de coocorrência
+- equilíbrio par/ímpar
+- distribuição por grupos
+- cobertura espacial flexível
+- padrão de consecutivos
+- controle de terminações
+- originalidade histórica
+
+Nota sugerida:
+- escala de 0 a 100
+
+==================================================
+7. ALGORITMO DE GERAÇÃO
+==================================================
+
+ETAPA 1
+Carregar janela escolhida
+
+ETAPA 2
+Calcular:
+- frequência
+- Z-Score
+- delay
+- repetição do último concurso
+- coocorrência
+- métricas espaciais
+
+ETAPA 3
+Filtrar universo elegível por Z-Score e score mínimo
+
+ETAPA 4
+Ordenar dezenas por score individual
+
+ETAPA 5
+Montar lista inicial respeitando:
+- quantidade escolhida pelo usuário
+- força estatística
+- repetição coerente do último concurso
+- diversidade mínima entre grupos
+
+ETAPA 6
+Aplicar validação e ajustes finos:
+- soma
+- par/ímpar
+- consecutivos
+- terminações
+- equilíbrio espacial flexível
+
+ETAPA 7
+Verificar anti-repetição histórica exata
+
+ETAPA 8
+Gerar múltiplas listas com diversidade controlada
+
+==================================================
+8. REGRAS FINAIS DE GERAÇÃO
+==================================================
+
+QUANTIDADE DE NÚMEROS:
+- definida pelo usuário entre 15 e 20
+
+REPETIÇÃO DO ÚLTIMO CONCURSO:
+- alvo recomendado: 7 a 11
+- pode sair fora dessa faixa se score geral justificar
+
+PAR / ÍMPAR:
+- alvo recomendado: 6 a 9 pares
+
+SOMA:
+- faixa operacional: 170 a 220
+- ideal: 185 a 205
+
+GRUPOS:
+- buscar boa distribuição entre G1-G5
+- sem obrigatoriedade rígida de mínimo fixo por grupo
+
+LINHAS / COLUNAS:
+- usar como critério de qualidade
+- nunca como bloqueio absoluto
+
+TERMINAÇÕES:
+- evitar excesso extremo
+- teto sugerido de 3 iguais, salvo justificativa estatística
+
+CONSECUTIVOS:
+- aceitar naturalmente
+- faixa recomendada: 3 a 8
+- sem penalizar sequências longas se forem compatíveis com padrões históricos
+
+ANTI-REPETIÇÃO:
+- combinação idêntica já sorteada deve ser rejeitada
+
+==================================================
+9. MODOS DO MOTOR
+==================================================
+
+MODO 1 — CONSERVADOR
+- maior aderência aos padrões médios
+- equilíbrio mais controlado
+
+MODO 2 — TENDÊNCIA
+- maior peso para janela curta
+- maior peso para frequência recente e repetição do último concurso
+
+MODO 3 — PRESSÃO
+- maior peso para delay
+- busca dezenas com atraso relevante
+
+MODO 4 — ESPACIAL FLEXÍVEL
+- prioriza boa cobertura do volante sem travas rígidas
+
+MODO 5 — HÍBRIDO PREMIUM
+- mistura frequência, delay, coocorrência, repetição e cobertura espacial
+- modo mais recomendado para produção
+
+==================================================
+10. BACKTEST HISTÓRICO
+==================================================
+
+O sistema deve permitir simulação retroativa.
+
+CENÁRIOS:
+- últimos 50 concursos
+- últimos 100 concursos
+- últimos 300 concursos
+
+MEDIÇÕES:
+- média de 11 pontos
+- média de 12 pontos
+- taxa de 13 pontos
+- taxa de 14 pontos
+- ocorrências simuladas de 15 pontos
+- comparação contra geração aleatória simples
+
+OBJETIVO:
+medir consistência do motor e validar parâmetros
+
+==================================================
+11. SAÍDA DO APP
+==================================================
+
+O usuário deve receber:
+
+- listas geradas
+- score de cada lista
+- soma total
+- pares/ímpares
+- repetidas do último concurso
+- nível de cobertura espacial
+- ranking de números quentes
+- ranking de números atrasados
+- modo utilizado
+- janela utilizada
+
+==================================================
+12. OBSERVAÇÕES TÉCNICAS
+==================================================
+
+- Não usar Fibonacci
+- Não usar números primos como critério de score
+- Não usar numerologia
+- Não usar matemática ornamental
+- Não prometer acertos
+- O motor serve para organizar escolhas por lógica estatística e estrutural
+- Sequências grandes podem acontecer e devem ser aceitas quando fizerem parte de padrões reais
+
+==================================================
+13. DECISÃO ESTRATÉGICA DO PROJETO
+==================================================
+
+Este motor foi ajustado para não cair em erro comum de engenharia lotérica:
+
+ERRO:
+criar filtros “bonitos” demais e bloquear o comportamento real da Lotofácil
+
+CORREÇÃO APLICADA:
+usar equilíbrio espacial como preferência inteligente, e não como regra rígida
+
+==================================================
+14. STATUS FINAL
+==================================================
+
+Blueprint revisado
+Sem resquícios ornamentais
+Mais realista
+Mais aderente à Lotofácil
+Pronto para MVP profissional
+
+FIM DO BLUEPRINT LOTOFÁCIL V3.0
