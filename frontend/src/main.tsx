@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-import './styles/index.css'
+import './index.css'
 
 // Monitoramento de Erros Frontend
 window.addEventListener('error', (event) => {
