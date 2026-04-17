@@ -39,13 +39,7 @@ app.include_router(pagamentos.router)
 
 @app.on_event("startup")
 async def startup():
-    # Garante que as tabelas existem (segurana extra)
-    # Nota: O Orion prefere rodar via SQL Editor, mas o SQLAlchemy 
-    # pode criar o que faltar aqui se necessário.
-    async with db_engine.begin() as conn:
-        # await conn.run_sync(Base.metadata.create_all)
-        pass
-    print("Orion System: Banco de Dados Conectado e Pool Ativo.")
+    print("Orion System: Backend iniciado. Aguardando requisies.")
 
 @app.get("/")
 async def root():

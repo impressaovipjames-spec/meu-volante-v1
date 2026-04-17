@@ -7,11 +7,15 @@ load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Engine assncrona simples (compatvel com PgBouncer do Supabase)
+# Engine assncrona compatvel com Supabase Pooler (PgBouncer)
 engine = create_async_engine(
     DATABASE_URL,
     echo=False,
-    future=True
+    future=True,
+    connect_args={
+        "prepared_statement_cache_size": 0,
+        "statement_cache_size": 0,
+    }
 )
 
 # Fabrica de sesses assncronas
