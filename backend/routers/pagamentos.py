@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from ..database import get_db
-from ..models import PedidoAssinatura, Usuario
-from ..schemas.responses import ApiResponse
+from database import get_db
+from models import PedidoAssinatura, Usuario
+from schemas.responses import ApiResponse
 from pydantic import BaseModel
 from datetime import datetime, timedelta
 

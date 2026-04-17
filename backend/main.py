@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routers import auth, engine, tickets, bolao, alertas, pagamentos
-from .database import engine as db_engine, Base
+from routers import auth, engine, tickets, bolao, alertas, pagamentos
+from database import engine as db_engine, Base
 import asyncio
 import time
 import os
