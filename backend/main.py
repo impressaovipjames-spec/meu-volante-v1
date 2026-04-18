@@ -14,7 +14,10 @@ frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[frontend_url] if frontend_url != "*" else ["*"],
+    allow_origins=[
+        "http://localhost:5173",
+        "https://meu-volante-app.onrender.com"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

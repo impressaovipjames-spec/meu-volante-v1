@@ -12,6 +12,9 @@ export default {
         quina: "#260085",
         dupla: "#a61324",
         dia: "#cb852b",
+        gold: "#FACC15",
+        greenPrimary: "#16A34A",
+        darkBg: "#050505",
         dark: {
           900: "#0a0a0a",
           800: "#121212",

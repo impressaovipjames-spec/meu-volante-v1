@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Zap, ShieldCheck, ArrowRight, UserPlus, HelpCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
+import api from '../services/api';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -13,17 +14,21 @@ const Login: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    // Simulao de chamada API integrada com Orion Monitor
-    setTimeout(() => {
-      if (email === 'admin@meuvolante.com' && password === '123456') {
-        localStorage.setItem('mv_token', 'mv_token_mock_123456');
+    try {
+      const response = await api.post('/auth/login', { email, password });
+      if (response.data.success) {
+        localStorage.setItem('mv_token', response.data.data.token);
+        localStorage.setItem('mv_user_info', JSON.stringify(response.data.data.user));
         toast.success("Acesso autorizado! Bem-vindo.");
         navigate('/dashboard');
       } else {
-        toast.error("Credenciais invlidas. Use a conta de teste.");
+        toast.error("Credenciais inválidas.");
       }
+    } catch (error: any) {
+      toast.error(error.response?.data?.detail || "Erro de conexão. Servidor indisponível.");
+    } finally {
       setLoading(false);
-    }, 1200);
+    }
   };
 
   return (
@@ -117,7 +122,7 @@ const Login: React.FC = () => {
 
             <div className="mt-12 pt-8 border-t border-dark-800">
                 <div className="flex flex-col gap-4">
-                    <button className="flex items-center justify-between p-4 bg-dark-800/50 border border-dark-700 rounded-2xl group hover:border-blue-500/30 transition-all text-left">
+                    <button onClick={() => navigate('/register')} className="flex items-center justify-between p-4 bg-dark-800/50 border border-dark-700 rounded-2xl group hover:border-blue-500/30 transition-all text-left w-full">
                         <div>
                             <p className="text-[10px] font-black text-gray-500 uppercase tracking-widest leading-none mb-1">Novo por aqui?</p>
                             <p className="text-sm font-black text-white uppercase italic">Criar Conta Gratuita</p>
