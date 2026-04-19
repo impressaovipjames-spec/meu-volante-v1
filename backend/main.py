@@ -2,6 +2,8 @@ from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from routers import auth, engine, tickets, bolao, alertas, pagamentos
 import time
+from sqlalchemy import text
+from database import engine as db_engine
 
 app = FastAPI(title="Meu Volante API", version="1.0.0")
 
@@ -30,7 +32,13 @@ app.include_router(pagamentos.router)
 
 @app.on_event("startup")
 async def startup():
-    print("Orion System: Backend iniciado. Aguardando requisições.")
+    print("=== ORION: Iniciando backend ===")
+    try:
+        async with db_engine.begin() as conn:
+            await conn.execute(text("SELECT 1"))
+        print("=== ORION: Banco de dados OK ===")
+    except Exception as e:
+        print(f"=== ORION: ERRO NO BANCO: {e} ===")
 
 @app.get("/")
 async def root():
