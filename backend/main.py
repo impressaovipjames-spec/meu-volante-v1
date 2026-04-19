@@ -1,25 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from routers import auth, engine, tickets, bolao, alertas, pagamentos
-from database import engine as db_engine, Base
-import asyncio
 import time
-import os
-from fastapi import Request
 
 app = FastAPI(title="Meu Volante API", version="1.0.0")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "https://meu-volante-app.onrender.com"
-    ],
+    allow_origins=["https://meu-volante-app.onrender.com"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Middleware de Monitoramento (Logs Backend)
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
     start_time = time.time()
@@ -28,7 +21,6 @@ async def log_requests(request: Request, call_next):
     print(f"[{request.method}] {request.url.path} - {response.status_code} - {process_time:.4f}s")
     return response
 
-# Insero dos Roteadores Industriais
 app.include_router(auth.router)
 app.include_router(engine.router)
 app.include_router(tickets.router)
@@ -38,15 +30,11 @@ app.include_router(pagamentos.router)
 
 @app.on_event("startup")
 async def startup():
-    print("Orion System: Backend iniciado. Aguardando requisies.")
+    print("Orion System: Backend iniciado. Aguardando requisições.")
 
 @app.get("/")
 async def root():
-    return {
-        "status": "online",
-        "engine": "Orion V1.0",
-        "database": "Supabase Realtime Persisted"
-    }
+    return {"status": "online", "engine": "Orion V1.0"}
 
 @app.get("/health")
 async def health():
