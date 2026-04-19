@@ -9,13 +9,9 @@ from fastapi import Request
 
 app = FastAPI(title="Meu Volante API", version="1.0.0")
 
-# Segurana de CORS: Limitado apenas url de frontend configurada ou universal para fallback.
-frontend_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:5173",
         "https://meu-volante-app.onrender.com"
     ],
     allow_credentials=True,
