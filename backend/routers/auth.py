@@ -41,27 +41,30 @@ async def login(credentials: LoginRequest, db: AsyncSession = Depends(get_db)):
 
 @router.post("/register", response_model=ApiResponse)
 async def register(data: RegisterRequest, db: AsyncSession = Depends(get_db)):
-    # Verificar se j existe
-    result = await db.execute(select(Usuario).where(Usuario.email == data.email))
-    if result.scalars().first():
-        return ApiResponse(success=False, message="E-mail j cadastrado")
-
-    new_user = Usuario(
-        email=data.email,
-        senha_hash=hash_password(data.password),
-        plano="free"
-    )
-    
-    db.add(new_user)
-    await db.commit()
-    await db.refresh(new_user)
-    
-    token = create_access_token(data={"sub": new_user.email, "id": str(new_user.id)})
-
-    return ApiResponse(
-        success=True,
-        data={
-            "token": token,
-            "user": {"id": str(new_user.id), "email": new_user.email, "plano": new_user.plano}
-        }
-    )
+    try:
+        result = await db.execute(select(Usuario).where(Usuario.email == data.email))
+        if result.scalars().first():
+            return ApiResponse(success=False, message="E-mail já cadastrado")
+        
+        new_user = Usuario(
+            email=data.email,
+            senha_hash=hash_password(data.password),
+            plano="free"
+        )
+        db.add(new_user)
+        await db.commit()
+        await db.refresh(new_user)
+        
+        token = create_access_token(data={"sub": new_user.email, "id": str(new_user.id)})
+        return ApiResponse(
+            success=True,
+            data={
+                "token": token,
+                "user": {"id": str(new_user.id), "email": new_user.email, "plano": new_user.plano}
+            }
+        )
+    except Exception as e:
+        import traceback
+        print(f"=== ERRO REGISTER: {str(e)} ===")
+        print(traceback.format_exc())
+        raise
