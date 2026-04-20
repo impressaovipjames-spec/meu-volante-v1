@@ -17,7 +17,15 @@ app.add_middleware(
 
 @app.options("/{rest_of_path:path}")
 async def preflight_handler(rest_of_path: str):
-    return Response(status_code=200)
+    return Response(
+        status_code=200,
+        headers={
+            "Access-Control-Allow-Origin": "https://meu-volante-app.onrender.com",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Credentials": "true",
+        }
+    )
 
 @app.middleware("http")
 async def log_requests(request: Request, call_next):
